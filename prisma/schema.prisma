@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum StatusPedido {
+  PENDENTE
+  EM_IMPRESSAO
+  CONCLUIDO
+}
+
+model Usuario {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  email String @unique
+  senha String
+}
+
+model Impressora {
+  id               Int      @id @default(autoincrement())
+  nome             String   @unique
+  larguraMm        Int
+  profundidadeMm   Int
+  alturaMm         Int
+  tiposCompativeis Json
+  pedidos          Pedido[]
+}
+
+model Material {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  tipo          String
+  cor           String
+  estoqueGramas Int
+  pedidos       Pedido[]
+}
+
+model Pedido {
+  id             Int          @id @default(autoincrement())
+  solicitante    String
+  descricao      String
+  larguraMm      Int
+  profundidadeMm Int
+  alturaMm       Int
+  materialId     Int
+  consumoGramas  Int
+  status         StatusPedido @default(PENDENTE)
+  impressoraId   Int?
+  iniciadoEm     DateTime?
+  concluidoEm    DateTime?
+  material       Material     @relation(fields: [materialId], references: [id], onDelete: Restrict)
+  impressora     Impressora?  @relation(fields: [impressoraId], references: [id], onDelete: Restrict)
+
+  @@index([impressoraId, status])
+  @@index([status])
+}
