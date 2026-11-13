@@ -97,6 +97,21 @@ const dimensoes = {
     alturaMm: { type: "integer", minimum: 1, example: 50 }
 };
 
+const entradaImpressora = {
+    type: "object",
+    required: ["nome", "larguraMm", "profundidadeMm", "alturaMm", "tiposCompativeis"],
+    properties: {
+        nome: { type: "string", example: "Impressora 01" },
+        ...dimensoes,
+        tiposCompativeis: {
+            type: "array",
+            minItems: 1,
+            items: { type: "string" },
+            example: ["PLA", "PETG"]
+        }
+    }
+};
+
 const swaggerDocument = {
     openapi: "3.0.3",
     info: {
@@ -106,6 +121,7 @@ const swaggerDocument = {
     },
     security: [{ tokenAcesso: [] }],
     paths: {
+        ...rotasCrud("/impressoras", "Impressoras", "Impressora", "impressora", "impressoras"),
         "/auth/login": {
             post: {
                 tags: ["Autenticação"],
@@ -154,6 +170,19 @@ const swaggerDocument = {
                     idUsuario: { type: "integer", example: 1 },
                     token: { type: "string", description: "JWT válido por oito horas." }
                 }
+            },
+            ImpressoraEntrada: entradaImpressora,
+            Impressora: {
+                allOf: [
+                    referencia("ImpressoraEntrada"),
+                    {
+                        type: "object",
+                        properties: {
+                            id: { type: "integer" },
+                            disponivel: { type: "boolean", example: true }
+                        }
+                    }
+                ]
             }
         }
     }

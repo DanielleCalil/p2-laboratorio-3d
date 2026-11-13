@@ -1,6 +1,7 @@
 import express, { type ErrorRequestHandler } from "express";
 import swaggerUi from "swagger-ui-express";
 import rotasAuth from "./routes/auth";
+import rotasImpressoras from "./routes/impressoras";
 import { validaToken } from "./Utils/criptografia";
 import { responderErro } from "./Utils/erroApi";
 import { swaggerDocument } from "./swagger";
@@ -15,7 +16,7 @@ app.get("/", (_req, res) => {
 app.get("/docs.json", (_req, res) => res.json(swaggerDocument));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", rotasAuth);
-
+app.use("/impressoras", validaToken, rotasImpressoras);
 app.use((_req, res) => {
     return res.status(404).json({ sucesso: false, mensagem: "Rota não encontrada." });
 });
