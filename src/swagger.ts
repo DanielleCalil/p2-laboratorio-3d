@@ -97,6 +97,17 @@ const dimensoes = {
     alturaMm: { type: "integer", minimum: 1, example: 50 }
 };
 
+const entradaMaterial = {
+    type: "object",
+    required: ["nome", "tipo", "cor", "estoqueGramas"],
+    properties: {
+        nome: { type: "string", example: "Filamento PLA azul" },
+        tipo: { type: "string", example: "PLA" },
+        cor: { type: "string", example: "Azul" },
+        estoqueGramas: { type: "integer", minimum: 0, example: 500 }
+    }
+};
+
 const entradaImpressora = {
     type: "object",
     required: ["nome", "larguraMm", "profundidadeMm", "alturaMm", "tiposCompativeis"],
@@ -135,6 +146,7 @@ const swaggerDocument = {
     paths: {
         ...rotasCrud("/impressoras", "Impressoras", "Impressora", "impressora", "impressoras"),
         ...rotasCrud("/pedidos", "Pedidos", "Pedido", "pedido", "pedidos"),
+        ...rotasCrud("/materiais", "Materiais", "Material", "material", "materiais"),
         "/auth/login": {
             post: {
                 tags: ["Autenticação"],
@@ -214,6 +226,13 @@ const swaggerDocument = {
                             concluidoEm: { type: "string", format: "date-time", nullable: true }
                         }
                     }
+                ]
+            },
+            MaterialEntrada: entradaMaterial,
+            Material: {
+                allOf: [
+                    referencia("MaterialEntrada"),
+                    { type: "object", properties: { id: { type: "integer" } } }
                 ]
             }
         }
