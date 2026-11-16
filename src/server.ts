@@ -5,6 +5,7 @@ import rotasImpressoras from "./routes/impressoras";
 import { validaToken } from "./Utils/criptografia";
 import { responderErro } from "./Utils/erroApi";
 import { swaggerDocument } from "./swagger";
+import rotasPedidos from "./routes/pedidos";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -17,6 +18,7 @@ app.get("/docs.json", (_req, res) => res.json(swaggerDocument));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", rotasAuth);
 app.use("/impressoras", validaToken, rotasImpressoras);
+app.use("/pedidos", validaToken, rotasPedidos);
 app.use((_req, res) => {
     return res.status(404).json({ sucesso: false, mensagem: "Rota não encontrada." });
 });

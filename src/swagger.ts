@@ -112,6 +112,18 @@ const entradaImpressora = {
     }
 };
 
+const entradaPedido = {
+    type: "object",
+    required: ["solicitante", "descricao", "larguraMm", "profundidadeMm", "alturaMm", "materialId", "consumoGramas"],
+    properties: {
+        solicitante: { type: "string", example: "Ana" },
+        descricao: { type: "string", example: "Suporte de mesa" },
+        ...dimensoes,
+        materialId: { type: "integer", minimum: 1, example: 1 },
+        consumoGramas: { type: "integer", minimum: 1, example: 120 }
+    }
+};
+
 const swaggerDocument = {
     openapi: "3.0.3",
     info: {
@@ -122,6 +134,7 @@ const swaggerDocument = {
     security: [{ tokenAcesso: [] }],
     paths: {
         ...rotasCrud("/impressoras", "Impressoras", "Impressora", "impressora", "impressoras"),
+        ...rotasCrud("/pedidos", "Pedidos", "Pedido", "pedido", "pedidos"),
         "/auth/login": {
             post: {
                 tags: ["Autenticação"],
@@ -180,6 +193,25 @@ const swaggerDocument = {
                         properties: {
                             id: { type: "integer" },
                             disponivel: { type: "boolean", example: true }
+                        }
+                    }
+                ]
+            },
+            PedidoEntrada: entradaPedido,
+            PedidoEdicao: { type: "object", minProperties: 1, properties: entradaPedido.properties },
+            Pedido: {
+                allOf: [
+                    referencia("PedidoEntrada"),
+                    {
+                        type: "object",
+                        properties: {
+                            id: { type: "integer" },
+                            status: { type: "string", enum: ["PENDENTE", "EM_IMPRESSAO", "CONCLUIDO"] },
+                            impressoraId: { type: "integer", nullable: true },
+                            impressora: { type: "object", nullable: true, allOf: [referencia("Impressora")] },
+                            material: referencia("Material"),
+                            iniciadoEm: { type: "string", format: "date-time", nullable: true },
+                            concluidoEm: { type: "string", format: "date-time", nullable: true }
                         }
                     }
                 ]
