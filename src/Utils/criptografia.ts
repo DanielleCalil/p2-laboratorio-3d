@@ -14,7 +14,7 @@ const segredoToken = () => {
   return segredo;
 };
 
-const hashSenha = async (senha: string) => {
+const hash = async (senha: string) => {
   const salt = randomBytes(16).toString("hex");
   const chave = (await derivarChave(senha, salt, 64)) as Buffer;
   return `scrypt:${salt}:${chave.toString("hex")}`;
@@ -67,4 +67,4 @@ const validaToken = (req: Request, _res: Response, next: NextFunction) => {
   next();
 };
 
-export { hashSenha, verificarSenha, gerarToken, validaToken };
+export { hash, verificarSenha, gerarToken, validaToken };

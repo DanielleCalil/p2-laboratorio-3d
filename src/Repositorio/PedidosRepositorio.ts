@@ -12,7 +12,7 @@ type DadosPedido = Pick<
   | "consumoGramas"
 >;
 
-const buscaTodosPedidosRepositorio = async () => {
+const listarPedidosRepositorio = async () => {
   const pedidos = await prisma.pedido.findMany({
     orderBy: { id: "asc" },
   });
@@ -118,7 +118,7 @@ const executarTransacaoPedidoRepositorio = async <T>(
 };
 
 export {
-  buscaTodosPedidosRepositorio,
+  listarPedidosRepositorio,
   buscarPedidoPorIdRepositorio,
   adicionarPedidoRepositorio,
   editarPedidoRepositorio,

@@ -1,9 +1,9 @@
 import {
-  adicionarMaterial,
-  buscaTodosMateriais,
-  buscaMaterialId,
-  editarMaterial,
-  excluirMaterial,
+  adicionarMaterialRepositorio,
+  listarMateriaisRepositorio,
+  buscarMaterialPorIdRepositorio,
+  editarMaterialRepositorio,
+  excluirMaterialRepositorio,
   type IMaterial,
 } from "../Repositorio/MateriaisRepositorio";
 import { idValido, textoValido, inteiroNaoNegativo } from "../Utils/validacao";
@@ -31,21 +31,21 @@ const validarDadosMaterial = (dados: IMaterial) => {
 };
 
 const adicionarMaterialServico = async (dados: IMaterial) => {
-  const material = await adicionarMaterial(validarDadosMaterial(dados));
+  const material = await adicionarMaterialRepositorio(validarDadosMaterial(dados));
   return material;
 };
 
-const buscaTodosMateriaisServico = async () => {
-  const materiais = await buscaTodosMateriais();
+const listarMateriaisServico = async () => {
+  const materiais = await listarMateriaisRepositorio();
   return materiais;
 };
 
-const buscaMaterialIdServico = async (id: number) => {
+const buscarMaterialPorIdServico = async (id: number) => {
   if (!idValido(id)) {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const material = await buscaMaterialId(id);
+  const material = await buscarMaterialPorIdRepositorio(id);
   return material;
 };
 
@@ -54,7 +54,7 @@ const editarMaterialServico = async (id: number, dados: IMaterial) => {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const material = await editarMaterial(id, validarDadosMaterial(dados));
+  const material = await editarMaterialRepositorio(id, validarDadosMaterial(dados));
   return material;
 };
 
@@ -63,14 +63,14 @@ const excluirMaterialServico = async (id: number) => {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const material = await excluirMaterial(id);
+  const material = await excluirMaterialRepositorio(id);
   return material;
 };
 
 export {
   adicionarMaterialServico,
-  buscaTodosMateriaisServico,
-  buscaMaterialIdServico,
+  listarMateriaisServico,
+  buscarMaterialPorIdServico,
   editarMaterialServico,
   excluirMaterialServico,
 };

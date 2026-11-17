@@ -1,6 +1,6 @@
 import { Prisma } from "../../generated/prisma/client";
 import {
-  buscaTodosPedidosRepositorio,
+  listarPedidosRepositorio,
   buscarPedidoPorIdRepositorio,
   adicionarPedidoRepositorio,
   editarPedidoRepositorio,
@@ -72,8 +72,8 @@ const buscarPedidoPorIdServico = async (
   return pedido;
 };
 
-const buscaTodosPedidosServico = async () => {
-  const pedidos = await buscaTodosPedidosRepositorio();
+const listarPedidosServico = async () => {
+  const pedidos = await listarPedidosRepositorio();
   return pedidos;
 };
 
@@ -280,7 +280,7 @@ const concluirPedidoServico = async (id: number) => {
 };
 
 export {
-  buscaTodosPedidosServico,
+  listarPedidosServico,
   buscarPedidoPorIdServico,
   adicionarPedidoServico,
   editarPedidoServico,

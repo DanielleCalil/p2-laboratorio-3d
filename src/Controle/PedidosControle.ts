@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import {
-  buscaTodosPedidosServico,
+  listarPedidosServico,
   buscarPedidoPorIdServico,
   adicionarPedidoServico,
   editarPedidoServico,
@@ -10,9 +10,9 @@ import {
 } from "../Servico/PedidosServico";
 import { responderErro } from "../Utils/erroApi";
 
-const buscaTodosPedidos = async (_req: Request, res: Response) => {
+const listarPedidosControle = async (_req: Request, res: Response) => {
   try {
-    const pedidos = await buscaTodosPedidosServico();
+    const pedidos = await listarPedidosServico();
     return res.status(200).json({
       sucesso: true,
       mensagem: "Pedidos encontrados com sucesso.",
@@ -102,7 +102,7 @@ const concluirPedidoControle = async (req: Request, res: Response) => {
 };
 
 export {
-  buscaTodosPedidos,
+  listarPedidosControle,
   buscarPedidoPorIdControle,
   adicionarPedidoControle,
   editarPedidoControle,

@@ -1,18 +1,18 @@
 import { Router } from "express";
 import {
   adicionarMaterialControle,
-  buscaTodosMateriais,
-  buscaMaterialIdControle,
+  listarMateriaisControle,
+  buscarMaterialPorIdControle,
   editarMaterialControle,
   excluirMaterialControle,
 } from "../Controle/MateriaisControle";
 
-const route = Router();
+const router = Router();
 
-route.post("/", adicionarMaterialControle);
-route.get("/", buscaTodosMateriais);
-route.get("/:id", buscaMaterialIdControle);
-route.put("/:id", editarMaterialControle);
-route.delete("/:id", excluirMaterialControle);
+router.post("/", adicionarMaterialControle);
+router.get("/", listarMateriaisControle);
+router.get("/:id", buscarMaterialPorIdControle);
+router.put("/:id", editarMaterialControle);
+router.delete("/:id", excluirMaterialControle);
 
-export default route;
+export default router;

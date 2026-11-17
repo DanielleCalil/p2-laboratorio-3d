@@ -199,6 +199,54 @@ const swaggerDocument = {
       "impressoras",
     ),
     ...rotasCrud("/pedidos", "Pedidos", "Pedido", "pedido", "pedidos"),
+    "/pedidos/{id}/iniciar": {
+      parameters: [parametroId],
+      put: {
+        tags: ["Pedidos"],
+        summary: "Iniciar a impressão de um pedido",
+        description:
+          "Regra de negócio principal. O pedido precisa estar PENDENTE e o material precisa ter saldo para o consumo estimado. " +
+          "A API escolhe a primeira impressora livre (sem pedido EM_IMPRESSAO), por ID, que aceite o tipo do filamento e " +
+          "comporte largura, profundidade e altura da peça. Em uma única transação, desconta o consumo do estoque, " +
+          "vincula a impressora, registra iniciadoEm e muda o status para EM_IMPRESSAO.",
+        responses: {
+          200: respostaSucesso(
+            "Impressão iniciada com sucesso.",
+            "pedido",
+            referencia("Pedido"),
+          ),
+          400: respostaErro("ID inválido."),
+          401: respostaErro("Token ausente, inválido ou expirado."),
+          404: respostaErro("Pedido não encontrado."),
+          409: respostaErro(
+            "Pedido não está pendente, estoque insuficiente ou nenhuma impressora compatível livre.",
+          ),
+          500: respostaErro("Erro interno."),
+        },
+      },
+    },
+    "/pedidos/{id}/concluir": {
+      parameters: [parametroId],
+      put: {
+        tags: ["Pedidos"],
+        summary: "Concluir a impressão de um pedido",
+        description:
+          "O pedido precisa estar EM_IMPRESSAO. Registra concluidoEm, muda o status para CONCLUIDO e libera a impressora, " +
+          "mantendo o vínculo para consulta do histórico.",
+        responses: {
+          200: respostaSucesso(
+            "Impressão concluída com sucesso.",
+            "pedido",
+            referencia("Pedido"),
+          ),
+          400: respostaErro("ID inválido."),
+          401: respostaErro("Token ausente, inválido ou expirado."),
+          404: respostaErro("Pedido não encontrado."),
+          409: respostaErro("Pedido não está em impressão."),
+          500: respostaErro("Erro interno."),
+        },
+      },
+    },
     ...rotasCrud(
       "/materiais",
       "Materiais",

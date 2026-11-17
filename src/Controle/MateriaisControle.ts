@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import {
   adicionarMaterialServico,
-  buscaTodosMateriaisServico,
-  buscaMaterialIdServico,
+  listarMateriaisServico,
+  buscarMaterialPorIdServico,
   editarMaterialServico,
   excluirMaterialServico,
 } from "../Servico/MateriaisServico";
@@ -21,9 +21,9 @@ const adicionarMaterialControle = async (req: Request, res: Response) => {
   }
 };
 
-const buscaTodosMateriais = async (_req: Request, res: Response) => {
+const listarMateriaisControle = async (_req: Request, res: Response) => {
   try {
-    const materiais = await buscaTodosMateriaisServico();
+    const materiais = await listarMateriaisServico();
     return res.status(200).json({
       sucesso: true,
       mensagem: "Materiais encontrados com sucesso.",
@@ -34,9 +34,9 @@ const buscaTodosMateriais = async (_req: Request, res: Response) => {
   }
 };
 
-const buscaMaterialIdControle = async (req: Request, res: Response) => {
+const buscarMaterialPorIdControle = async (req: Request, res: Response) => {
   try {
-    const material = await buscaMaterialIdServico(Number(req.params.id));
+    const material = await buscarMaterialPorIdServico(Number(req.params.id));
     return res.status(200).json({
       sucesso: true,
       mensagem: "Material encontrado com sucesso.",
@@ -78,8 +78,8 @@ const excluirMaterialControle = async (req: Request, res: Response) => {
 
 export {
   adicionarMaterialControle,
-  buscaTodosMateriais,
-  buscaMaterialIdControle,
+  listarMateriaisControle,
+  buscarMaterialPorIdControle,
   editarMaterialControle,
   excluirMaterialControle,
 };

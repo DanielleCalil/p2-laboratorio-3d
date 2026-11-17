@@ -7,36 +7,36 @@ interface IMaterial {
   estoqueGramas: number;
 }
 
-const adicionarMaterial = async (dados: IMaterial) => {
+const adicionarMaterialRepositorio = async (dados: IMaterial) => {
   const material = await prisma.material.create({ data: dados });
   return material;
 };
 
-const buscaTodosMateriais = async () => {
+const listarMateriaisRepositorio = async () => {
   const materiais = await prisma.material.findMany({ orderBy: { id: "asc" } });
   return materiais;
 };
 
-const buscaMaterialId = async (id: number) => {
+const buscarMaterialPorIdRepositorio = async (id: number) => {
   const material = await prisma.material.findUniqueOrThrow({ where: { id } });
   return material;
 };
 
-const editarMaterial = async (id: number, dados: IMaterial) => {
+const editarMaterialRepositorio = async (id: number, dados: IMaterial) => {
   const material = await prisma.material.update({ where: { id }, data: dados });
   return material;
 };
 
-const excluirMaterial = async (id: number) => {
+const excluirMaterialRepositorio = async (id: number) => {
   const material = await prisma.material.delete({ where: { id } });
   return material;
 };
 
 export {
   IMaterial,
-  adicionarMaterial,
-  buscaTodosMateriais,
-  buscaMaterialId,
-  editarMaterial,
-  excluirMaterial,
+  adicionarMaterialRepositorio,
+  listarMateriaisRepositorio,
+  buscarMaterialPorIdRepositorio,
+  editarMaterialRepositorio,
+  excluirMaterialRepositorio,
 };

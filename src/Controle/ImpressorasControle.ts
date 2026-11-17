@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import {
   adicionarImpressoraServico,
-  buscaTodosImpressorasServico,
-  buscaImpressoraIdServico,
+  listarImpressorasServico,
+  buscarImpressoraPorIdServico,
   editarImpressoraServico,
   excluirImpressoraServico,
 } from "../Servico/ImpressorasServico";
@@ -21,9 +21,9 @@ const adicionarImpressoraControle = async (req: Request, res: Response) => {
   }
 };
 
-const buscaTodosImpressoras = async (_req: Request, res: Response) => {
+const listarImpressorasControle = async (_req: Request, res: Response) => {
   try {
-    const impressoras = await buscaTodosImpressorasServico();
+    const impressoras = await listarImpressorasServico();
     return res.status(200).json({
       sucesso: true,
       mensagem: "Impressoras encontradas com sucesso.",
@@ -34,9 +34,9 @@ const buscaTodosImpressoras = async (_req: Request, res: Response) => {
   }
 };
 
-const buscaImpressoraIdControle = async (req: Request, res: Response) => {
+const buscarImpressoraPorIdControle = async (req: Request, res: Response) => {
   try {
-    const impressora = await buscaImpressoraIdServico(Number(req.params.id));
+    const impressora = await buscarImpressoraPorIdServico(Number(req.params.id));
     return res.status(200).json({
       sucesso: true,
       mensagem: "Impressora encontrada com sucesso.",
@@ -78,8 +78,8 @@ const excluirImpressoraControle = async (req: Request, res: Response) => {
 
 export {
   adicionarImpressoraControle,
-  buscaTodosImpressoras,
-  buscaImpressoraIdControle,
+  listarImpressorasControle,
+  buscarImpressoraPorIdControle,
   editarImpressoraControle,
   excluirImpressoraControle,
 };

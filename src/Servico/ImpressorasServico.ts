@@ -1,9 +1,9 @@
 import {
-  adicionarImpressora,
-  buscaTodosImpressoras,
-  buscaImpressoraId,
-  editarImpressora,
-  excluirImpressora,
+  adicionarImpressoraRepositorio,
+  listarImpressorasRepositorio,
+  buscarImpressoraPorIdRepositorio,
+  editarImpressoraRepositorio,
+  excluirImpressoraRepositorio,
   type IImpressora,
 } from "../Repositorio/ImpressorasRepositorio";
 import { idValido, textoValido, inteiroPositivo } from "../Utils/validacao";
@@ -39,21 +39,21 @@ const validarDadosImpressora = (dados: IImpressora) => {
 };
 
 const adicionarImpressoraServico = async (dados: IImpressora) => {
-  const impressora = await adicionarImpressora(validarDadosImpressora(dados));
+  const impressora = await adicionarImpressoraRepositorio(validarDadosImpressora(dados));
   return impressora;
 };
 
-const buscaTodosImpressorasServico = async () => {
-  const impressoras = await buscaTodosImpressoras();
+const listarImpressorasServico = async () => {
+  const impressoras = await listarImpressorasRepositorio();
   return impressoras;
 };
 
-const buscaImpressoraIdServico = async (id: number) => {
+const buscarImpressoraPorIdServico = async (id: number) => {
   if (!idValido(id)) {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const impressora = await buscaImpressoraId(id);
+  const impressora = await buscarImpressoraPorIdRepositorio(id);
   return impressora;
 };
 
@@ -62,7 +62,7 @@ const editarImpressoraServico = async (id: number, dados: IImpressora) => {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const impressora = await editarImpressora(id, validarDadosImpressora(dados));
+  const impressora = await editarImpressoraRepositorio(id, validarDadosImpressora(dados));
   return impressora;
 };
 
@@ -71,14 +71,14 @@ const excluirImpressoraServico = async (id: number) => {
     throw new ErroApi(400, "Informe um ID válido.");
   }
 
-  const impressora = await excluirImpressora(id);
+  const impressora = await excluirImpressoraRepositorio(id);
   return impressora;
 };
 
 export {
   adicionarImpressoraServico,
-  buscaTodosImpressorasServico,
-  buscaImpressoraIdServico,
+  listarImpressorasServico,
+  buscarImpressoraPorIdServico,
   editarImpressoraServico,
   excluirImpressoraServico,
 };

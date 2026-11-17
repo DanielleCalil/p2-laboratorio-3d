@@ -18,7 +18,7 @@ const pedidosAtivos = {
   },
 } as const;
 
-const adicionarImpressora = async (dados: IImpressora) => {
+const adicionarImpressoraRepositorio = async (dados: IImpressora) => {
   const impressora = await prisma.impressora.create({
     data: dados,
     ...pedidosAtivos,
@@ -27,7 +27,7 @@ const adicionarImpressora = async (dados: IImpressora) => {
   return { ...dadosImpressora, disponivel: pedidos.length === 0 };
 };
 
-const buscaTodosImpressoras = async () => {
+const listarImpressorasRepositorio = async () => {
   const impressoras = await prisma.impressora.findMany({
     orderBy: { id: "asc" },
     ...pedidosAtivos,
@@ -38,7 +38,7 @@ const buscaTodosImpressoras = async () => {
   }));
 };
 
-const buscaImpressoraId = async (id: number) => {
+const buscarImpressoraPorIdRepositorio = async (id: number) => {
   const impressora = await prisma.impressora.findUniqueOrThrow({
     where: { id },
     ...pedidosAtivos,
@@ -47,7 +47,7 @@ const buscaImpressoraId = async (id: number) => {
   return { ...dadosImpressora, disponivel: pedidos.length === 0 };
 };
 
-const editarImpressora = async (id: number, dados: IImpressora) => {
+const editarImpressoraRepositorio = async (id: number, dados: IImpressora) => {
   const impressora = await prisma.impressora.update({
     where: { id },
     data: dados,
@@ -57,7 +57,7 @@ const editarImpressora = async (id: number, dados: IImpressora) => {
   return { ...dadosImpressora, disponivel: pedidos.length === 0 };
 };
 
-const excluirImpressora = async (id: number) => {
+const excluirImpressoraRepositorio = async (id: number) => {
   const impressora = await prisma.impressora.delete({
     where: { id },
     ...pedidosAtivos,
@@ -68,9 +68,9 @@ const excluirImpressora = async (id: number) => {
 
 export {
   IImpressora,
-  adicionarImpressora,
-  buscaTodosImpressoras,
-  buscaImpressoraId,
-  editarImpressora,
-  excluirImpressora,
+  adicionarImpressoraRepositorio,
+  listarImpressorasRepositorio,
+  buscarImpressoraPorIdRepositorio,
+  editarImpressoraRepositorio,
+  excluirImpressoraRepositorio,
 };

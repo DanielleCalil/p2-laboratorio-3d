@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { prisma } from "../src/prisma";
-import { hashSenha } from "../src/Utils/criptografia";
+import { hash } from "../src/Utils/criptografia";
 
 const criarUsuario = async () => {
   const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
@@ -17,7 +17,7 @@ const criarUsuario = async () => {
     create: {
       nome: "Equipe do laboratório",
       email,
-      senha: await hashSenha(senha),
+      senha: await hash(senha),
     },
   });
   console.log("Usuário inicial disponível para login.");

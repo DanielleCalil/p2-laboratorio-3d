@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  buscaTodosPedidos,
+  listarPedidosControle,
   buscarPedidoPorIdControle,
   adicionarPedidoControle,
   editarPedidoControle,
@@ -9,14 +9,14 @@ import {
   concluirPedidoControle,
 } from "../Controle/PedidosControle";
 
-const route = Router();
+const router = Router();
 
-route.post("/", adicionarPedidoControle);
-route.get("/", buscaTodosPedidos);
-route.get("/:id", buscarPedidoPorIdControle);
-route.put("/:id", editarPedidoControle);
-route.delete("/:id", excluirPedidoControle);
-route.put("/:id/iniciar", iniciarPedidoControle);
-route.put("/:id/concluir", concluirPedidoControle);
+router.post("/", adicionarPedidoControle);
+router.get("/", listarPedidosControle);
+router.get("/:id", buscarPedidoPorIdControle);
+router.put("/:id", editarPedidoControle);
+router.delete("/:id", excluirPedidoControle);
+router.put("/:id/iniciar", iniciarPedidoControle);
+router.put("/:id/concluir", concluirPedidoControle);
 
-export default route;
+export default router;

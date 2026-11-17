@@ -1,18 +1,18 @@
 import { Router } from "express";
 import {
   adicionarImpressoraControle,
-  buscaTodosImpressoras,
-  buscaImpressoraIdControle,
+  listarImpressorasControle,
+  buscarImpressoraPorIdControle,
   editarImpressoraControle,
   excluirImpressoraControle,
 } from "../Controle/ImpressorasControle";
 
-const route = Router();
+const router = Router();
 
-route.post("/", adicionarImpressoraControle);
-route.get("/", buscaTodosImpressoras);
-route.get("/:id", buscaImpressoraIdControle);
-route.put("/:id", editarImpressoraControle);
-route.delete("/:id", excluirImpressoraControle);
+router.post("/", adicionarImpressoraControle);
+router.get("/", listarImpressorasControle);
+router.get("/:id", buscarImpressoraPorIdControle);
+router.put("/:id", editarImpressoraControle);
+router.delete("/:id", excluirImpressoraControle);
 
-export default route;
+export default router;
